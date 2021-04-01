@@ -1,0 +1,27 @@
+.form-wrapper {
+    margin-bottom: 20px;
+}
+
+.input {
+    min-width: 60%;
+    padding: 5px 10px;
+    background-color: #eeeeee;
+    border: none;
+    outline: none;
+    height: 40px;
+    border-radius: 5px 0 0 5px;
+}
+
+button {
+    padding: 5px 10px;
+    background-color: #eeeeee;
+    border: none;
+    outline: none;
+    height: 40px;
+    border-radius: 0 5px 5px 0;
+
+    &:hover {
+        background-color: #0e3478;
+        color: #ffffff;
+    }
+}

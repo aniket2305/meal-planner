@@ -1,0 +1,32 @@
+.check-element {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    border-radius: 50%;
+    margin-right: 10px;
+
+    &.checked {
+        background-color: #439632;
+        border: 2px solid #439632;
+    }
+
+    &.unchecked {
+        border: 2px solid #a9a9a9
+    }
+}
+
+.list-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eeeeee;
+
+    span:nth-child(2){
+        flex-grow: 1;
+    }
+}
+
+
+.close-icon {
+    padding: 0 10px;
+}
