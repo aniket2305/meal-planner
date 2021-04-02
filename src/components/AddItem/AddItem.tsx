@@ -1,17 +1,14 @@
 import "./AddItem.scss";
 import React from 'react';
+import { addItem } from "../../actions/actions";
 
-interface addItemProps {
-    addItem: (item: string) => void
-}
-
-function AddItem({ addItem }: addItemProps) {
+function AddItem({ dispatch }: any) {
     const [item, setValue] = React.useState("");
   
     const handleSubmit = (e:any) => {
       e.preventDefault();
       if (!item) return;
-      addItem(item);
+      dispatch(addItem(item));
       setValue("");
     };
   

@@ -6,6 +6,9 @@ import { setTokenInLocalStorage } from './utils'
 
 import {ApolloClient, HttpLink, InMemoryCache, ApolloLink, ApolloProvider, concat} from "@apollo/client";
 
+// this is not working properly i was able to query the api with token
+// leaving this code just in case it works can replace with real data
+
 setTokenInLocalStorage();
 
 const httpLink = new HttpLink({ uri: 'https://ddapi.production.dietdoctor.com/v1' });

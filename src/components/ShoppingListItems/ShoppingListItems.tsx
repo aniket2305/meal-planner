@@ -1,28 +1,23 @@
 import './ShoppingListItems.scss';
+import {IShoppingList} from '../../interface';
 
 interface ShoppingListItemsProps {
-    item: IItem,
-    index: number;
-    category: string;
-    changeItemState: (index: number, category: string, item:IItem) => void;
-    removeItem?: (index: number, e:any) => void;
+    item: IShoppingList,
+    removeItem?: (id: string) => void;
+    changeState: (id: string) => void;
 }
 
-interface IItem {
-    value: string;
-    isCompleted: boolean;
-}
-
-function ShoppingListItems({ item, index, category, changeItemState, removeItem }: ShoppingListItemsProps) {
+function ShoppingListItems({ item, changeState, removeItem }: ShoppingListItemsProps) {
     return (
       <li
         className="list-item"
-        onClick= {() => changeItemState(index, category, item)}
+        onClick= {() => changeState(item.id)}
       >
         <span className={`check-element ${item.isCompleted ? "checked" : "unchecked"}`} ></span>            
-        <span>{item.value}</span>
+        <span>{item.ingredient}</span>
 
-        {(category === "extra" && removeItem)  && <span className="close-icon" onClick= {(e) => removeItem(index, e)}>X</span>}
+        {(item.shoppingCategory === "Extra" && removeItem) && 
+            <span className="close-icon" onClick= {() => removeItem(item.id)} >X</span>}
       </li>
     );
   }

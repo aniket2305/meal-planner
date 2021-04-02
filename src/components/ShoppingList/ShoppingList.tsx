@@ -2,9 +2,12 @@ import React from "react";
 import './ShoppingList.scss';
 import AddItem from "../AddItem/AddItem";
 import ShoppingListItems from "../ShoppingListItems/ShoppingListItems";
+import { completeItem, unCompleteItem, removeItem } from "../../actions/actions";
+
 // import {gql, useQuery} from '@apollo/client';
 
-import { data }from "../../data";
+import { data } from "../../data";
+import { shopplingListReducer } from "../../reducer/shoppingListReducer"
 
 // not sure for some reason this does not seem to work for me
 // export const GET_LIST = gql`
@@ -18,91 +21,41 @@ import { data }from "../../data";
 function ShoppingList() {
   // const { data } = useQuery(GET_LIST);
 
-  const [items, addItems] = React.useState<any[]>([]);
+  const [items, dispatch] = React.useReducer(shopplingListReducer, data)
 
-
-  const addItem = (value: string): void => {
-    const itemsCopy = [{ value, isCompleted: false }, ...items];
-    addItems(itemsCopy);
-  };
-
-  const completeItem = (index: number, category: string) => {
-    if(category === "extra") {
-      const itemsCopy = [...items];
-      itemsCopy[index].isCompleted = true;
-      addItems(itemsCopy);
-    }
-  };
-
-  const unCompleteItem = (index: number, category: string) => {
-    if(category === "extra") {
-      const itemsCopy = [...items];
-      itemsCopy[index].isCompleted = false;
-      addItems(itemsCopy);
-    }
-  };
-
-  const removeItem = (index: number, e:MouseEvent) => {
-    e.stopPropagation()
-    const itemsCopy = [...items];
-    itemsCopy.splice(index, 1);
-    addItems(itemsCopy);
-  };
+  const showExtra = items.shoppingList.some(item => item.shoppingCategory === "Extra");
+  const showComplete = items.shoppingList.some(item => item.isCompleted === true);
 
   return (
     <div className="shopping-list-container">
         <h1>Shopping List</h1>
 
-        <AddItem addItem= {addItem} />
+        <AddItem dispatch= {dispatch} />
         <div className="category-section">
-           <h3>Extra</h3>
-
+           {showExtra && <h3>Extra</h3>}
            <ul className="item-list-container">
-             {items.map((item, index) => (
+             {items.shoppingList.map((item) => (
                !item.isCompleted && 
                <ShoppingListItems
-                 key={index}
+                 key={item.id}
                  item={item}
-                 index={index}
-                 category="extra"
-                 changeItemState = {completeItem}
-                 removeItem= {removeItem}
+                 changeState={(id:string) =>dispatch(completeItem(id))}
+                 removeItem= {(id:string) =>dispatch(removeItem(id))}
                />
              ))}
            </ul>
          </div>
 
-        {data.map((itemData, index) => (
-          <div className="category-section" key={index}>
-           <h3>{itemData.shoppingCategory}</h3>
-           
-           <ul className="item-list-container">
-             {itemData.shoppingIngredient.map((item, index) => (
-               !item.isCompleted && 
-               <ShoppingListItems
-                 key={index}
-                 item={item}
-                 index={index}
-                 category={itemData.shoppingCategory}
-                 changeItemState = {completeItem}
-               />
-             ))}
-           </ul>
-         </div>
-        ))}
-
         <div className="category-section">
-           <h3>Completed</h3>
+           {showComplete && <h3>Completed</h3>}
            <ul className="item-list-container">
-             {items.map((item, index) => (
+             {items.shoppingList.map((item) => (
                item.isCompleted && 
                <ShoppingListItems
-                 key={index}
+                 key={item.id}
                  item={item}
-                 index={index}
-                 category="extra"
-                 changeItemState = {unCompleteItem}
-                 removeItem = {removeItem}
+                 changeState= {(id:string) =>dispatch(unCompleteItem(id))}
+                 removeItem= {(id:string) =>dispatch(removeItem(id))}
                />
              ))}
            </ul>
