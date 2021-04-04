@@ -4,23 +4,10 @@ import AddItem from "../AddItem/AddItem";
 import ShoppingListItems from "../ShoppingListItems/ShoppingListItems";
 import { completeItem, unCompleteItem, removeItem } from "../../actions/actions";
 
-// import {gql, useQuery} from '@apollo/client';
-
-import { data } from "../../data";
-import { shopplingListReducer } from "../../reducer/shoppingListReducer"
-
-// not sure for some reason this does not seem to work for me
-// export const GET_LIST = gql`
-//     query {
-//       combinedShoppingList(recipes: [2]){
-//         shoppingSection
-//       }
-//     }
-// `;
+import { data, shoppingCategories } from "../../data";
+import { shopplingListReducer } from "../../reducer/shoppingListReducer";
 
 function ShoppingList() {
-  // const { data } = useQuery(GET_LIST);
-
   const [items, dispatch] = React.useReducer(shopplingListReducer, data)
 
   const showExtra = items.shoppingList.some(item => item.shoppingCategory === "Extra");
@@ -31,10 +18,12 @@ function ShoppingList() {
         <h1>Shopping List</h1>
 
         <AddItem dispatch= {dispatch} />
-        <div className="category-section">
-           {showExtra && <h3>Extra</h3>}
+        {shoppingCategories.map((category, index) => (
+
+        <div className="category-section" key={index}>
+          {(category==="Extra" && !showExtra) ? "" : <h3>{category}</h3>}
            <ul className="item-list-container">
-             {items.shoppingList.map((item) => (
+             {items.shoppingList.filter(element => element.shoppingCategory === category).map((item) => (
                !item.isCompleted && 
                <ShoppingListItems
                  key={item.id}
@@ -45,6 +34,7 @@ function ShoppingList() {
              ))}
            </ul>
          </div>
+        ))}
 
         <div className="category-section">
            {showComplete && <h3>Completed</h3>}

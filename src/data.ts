@@ -32,4 +32,8 @@ export const data: IData  = {
         ingredient: "Heavy whipping cream",
         isCompleted: false
     }]
-}
+};
+
+export const shoppingCategories = ["Extra", "Baking", "Dairy"];
+
+
