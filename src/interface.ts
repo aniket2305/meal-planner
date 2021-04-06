@@ -1,10 +1,10 @@
 export interface IData {
- shoppingList: IShoppingList[]
+  shoppingList: IShoppingList[];
 }
 
-export interface IShoppingList{
-    id: string;
-    shoppingCategory: string;
-    ingredient: string;
-    isCompleted: boolean;
+export interface IShoppingList {
+  id: string;
+  shoppingCategory: string;
+  ingredient: string;
+  isCompleted: boolean;
 }

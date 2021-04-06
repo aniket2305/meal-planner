@@ -1,0 +1,9 @@
+
+# ignore
+.*
+/build/
+node_modules
+package.json
+reports
+yarn.lock
+yarn-error.log
