@@ -1,8 +1,9 @@
 import { render, screen } from "@testing-library/react";
-import App from "./ShoppingList";
+import ShoppingList from "./ShoppingList";
 
-test("renders learn react link", () => {
-  render(<App />);
-  const linkElement = screen.getByText(/Meal Planner/i);
-  expect(linkElement).toBeInTheDocument();
+// just to try unit test
+test("renders heading element", () => {
+  render(<ShoppingList />);
+  const headingElement = screen.getByText(/Shopping List/i);
+  expect(headingElement).toBeInTheDocument();
 });
